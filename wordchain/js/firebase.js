@@ -1,39 +1,19 @@
-// ============================================================
-//  FIREBASE CONFIG — edit this file to enable multiplayer
-//
-//  Steps:
-//  1. Go to https://console.firebase.google.com
-//  2. Create a project → Add a Web App → copy the config
-//  3. Paste your values below (replace each "YOUR_..." string)
-//  4. In Firestore Database → Rules, use:
-//
-//     rules_version = '2';
-//     service cloud.firestore {
-//       match /databases/{database}/documents {
-//         match /rooms/{roomId} {
-//           allow read, write: if true;
-//         }
-//       }
-//     }
-// ============================================================
-
-const FIREBASE_CONFIG = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+const firebaseConfig = {
+  apiKey: "AIzaSyBBSxDBsj8rR7J7a7htjkptz8obBTbnkQg",
+  authDomain: "wordchain-aed75.firebaseapp.com",
+  projectId: "wordchain-aed75",
+  storageBucket: "wordchain-aed75.firebasestorage.app",
+  messagingSenderId: "1058532743246",
+  appId: "1:1058532743246:web:7c2504cbb1ac4c466a0b1f"
 };
 
-// ── Init ────────────────────────────────────────────────────
 let db = null;
 let isFirebaseReady = false;
 
 try {
-  firebase.initializeApp(FIREBASE_CONFIG);
+  firebase.initializeApp(firebaseConfig);
   db = firebase.firestore();
-  isFirebaseReady = FIREBASE_CONFIG.apiKey !== "YOUR_API_KEY";
+  isFirebaseReady = firebaseConfig.apiKey !== "YOUR_API_KEY";
 } catch (e) {
   console.warn("Firebase init failed:", e);
 }
