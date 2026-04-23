@@ -1,0 +1,49 @@
+:root {
+    --bg-color: #f0f2f5;
+    --border-color: #34495e;
+    --cell-size: 50px;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.game-container { text-align: center; }
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(9, var(--cell-size));
+    grid-template-rows: repeat(9, var(--cell-size));
+    border: 3px solid var(--border-color);
+    margin: 20px auto;
+    background-color: white;
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 20px;
+    line-height: var(--cell-size);
+    outline: none;
+    cursor: pointer;
+}
+
+/* Thicker borders for 3x3 grids */
+.cell:nth-child(3n) { border-right: 3px solid var(--border-color); }
+.cell:nth-child(9n) { border-right: 1px solid #ddd; } /* Fix right edge */
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) { border-bottom: 3px solid var(--border-color); }
+
+.cell.original { background-color: #ebebeb; font-weight: bold; cursor: default; }
+.cell:focus { background-color: #e3f2fd; }
+.cell.error { color: #e74c3c; }
+
+.controls, .actions { margin: 10px; }
+button, select { padding: 10px 20px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }
+#message { font-weight: bold; margin-top: 15px; }
