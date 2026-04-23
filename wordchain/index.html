@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WordChain — Word Association</title>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<div class="app">
+  <header class="header">
+    <div class="logo">Word<span>Chain</span></div>
+    <div class="badge" id="statusBadge">Offline</div>
+  </header>
+
+  <div class="config-warning" id="configWarning" style="display:none;">
+    <strong>⚠️ Firebase not configured</strong>
+    Open <code>js/firebase.js</code> and replace the config with your own from
+    <strong>console.firebase.google.com</strong> — until then the game runs in <strong>demo / solo mode</strong>.
+  </div>
+
+  <!-- SETUP -->
+  <div class="screen active" id="setupScreen">
+    <div class="setup-card">
+      <div class="setup-title">Ready to play?</div>
+      <div class="setup-sub">Enter a name, then create a room or join a friend's with their code.</div>
+      <div class="field-label">Your name</div>
+      <input class="text-input" id="nameInput" placeholder="e.g. Alex" maxlength="16"/>
+      <div class="btn-row">
+        <button class="btn go" onclick="createRoom()">Create Room</button>
+      </div>
+      <div class="divider">or join existing</div>
+      <div class="field-label">Room code</div>
+      <input class="text-input" id="codeInput" placeholder="e.g. 7X4K" maxlength="6" style="text-transform:uppercase;letter-spacing:3px;"/>
+      <div class="btn-row">
+        <button class="btn secondary" onclick="joinRoom()">Join Room</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOBBY -->
+  <div class="screen" id="lobbyScreen">
+    <div class="setup-card">
+      <div class="setup-title">Room Lobby</div>
+      <div class="setup-sub">Share the code below. Host starts the game when everyone's in.</div>
+      <div class="room-code-box">
+        <div class="room-code-label">Room Code</div>
+        <div class="room-code-val" id="lobbyCode">—</div>
+      </div>
+      <div class="field-label">Players (<span id="playerCount">0</span>/6)</div>
+      <div class="player-list" id="playerList"></div>
+      <div class="btn-row" id="hostControls" style="display:none;">
+        <button class="btn go" onclick="startGame()">Start Game ▶</button>
+        <button class="btn danger" onclick="leaveRoom()">Leave</button>
+      </div>
+      <div id="guestControls">
+        <p class="waiting-msg">Waiting for host to start<span class="waiting-dots"></span></p>
+        <button class="btn danger" style="margin-top:12px;" onclick="leaveRoom()">Leave</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME -->
+  <div class="screen" id="gameScreen">
+    <div class="game-header">
+      <div class="round-info">Round <span id="roundNum">1</span> / <span id="totalRounds">5</span></div>
+      <div class="score-pills" id="scorePills"></div>
+    </div>
+    <div class="prompt-box">
+      <div>
+        <div class="prompt-label">Respond to</div>
+        <div class="prompt-word" id="promptWord">—</div>
+      </div>
+      <div class="turn-indicator">
+        <div class="turn-name" id="turnName">—</div>
+        <div class="turn-sub" id="turnSub">their turn</div>
+      </div>
+    </div>
+    <div class="timer-wrap">
+      <div class="timer-bar-bg"><div class="timer-bar-fill" id="timerBar" style="width:100%;"></div></div>
+      <div class="timer-text" id="timerText">15s</div>
+    </div>
+    <div class="chain-wrap">
+      <div class="chain-label">Word chain</div>
+      <div class="chain-words" id="chainWords">
+        <div class="empty-chain">Chain starts with the first word…</div>
+      </div>
+    </div>
+    <div class="input-row">
+      <input class="word-input" id="wordInput" placeholder="TYPE WORD" maxlength="24" disabled/>
+      <button class="btn go" onclick="submitWord()">→</button>
+    </div>
+  </div>
+
+  <!-- END -->
+  <div class="screen" id="endScreen">
+    <div class="end-card">
+      <div class="end-title">Game Over! 🎉</div>
+      <div class="end-sub">Final scores</div>
+      <ul class="leaderboard" id="leaderboard"></ul>
+      <div class="btn-row" style="justify-content:center;">
+        <button class="btn go" onclick="playAgain()">Play Again</button>
+        <button class="btn secondary" onclick="goHome()">Home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
